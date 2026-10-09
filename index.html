@@ -9,6 +9,7 @@
   <meta property="og:description" content="Xem miễn phí con số chủ đạo và biểu đồ ngày sinh trong chưa đến một phút.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#c8102e">
+  <meta name="color-scheme" content="light">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23fff'/%3E%3Crect width='32' height='9' rx='4' fill='%23c8102e'/%3E%3Ctext x='16' y='27' text-anchor='middle' font-family='Arial' font-weight='900' font-size='19' fill='%23c8102e'%3E9%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +28,7 @@
     <section class="hero" aria-labelledby="tieu-de">
       <div class="hero__text">
         <h1 id="tieu-de">Ngày bạn sinh ra mang con số nào?</h1>
-        <p class="lede">Chọn ngày sinh, tờ lịch sẽ lật về đúng ngày bạn chào đời. Xé tờ lịch để xem con số chủ đạo và biểu đồ ngày sinh của bạn. Miễn phí, chưa đến một phút.</p>
+        <p class="lede">Chọn ngày sinh để lật tờ lịch về đúng ngày bạn chào đời, rồi xé lịch xem con số chủ đạo, biểu đồ ngày sinh và năm cá nhân của bạn.</p>
       </div>
 
       <div class="lich" aria-hidden="true">
@@ -58,12 +59,18 @@
         <fieldset class="field" data-field="birth">
           <legend>Ngày sinh dương lịch</legend>
           <div class="birth">
-            <label class="visually-hidden" for="day">Ngày</label>
-            <select id="day" name="day" autocomplete="bday-day" required><option value="">Ngày</option></select>
-            <label class="visually-hidden" for="month">Tháng</label>
-            <select id="month" name="month" autocomplete="bday-month" required><option value="">Tháng</option></select>
-            <label class="visually-hidden" for="year">Năm</label>
-            <select id="year" name="year" autocomplete="bday-year" required><option value="">Năm</option></select>
+            <div>
+              <label class="birth__label" for="day">Ngày</label>
+              <select id="day" name="day" autocomplete="bday-day" required><option value="">Chọn</option></select>
+            </div>
+            <div>
+              <label class="birth__label" for="month">Tháng</label>
+              <select id="month" name="month" autocomplete="bday-month" required><option value="">Chọn</option></select>
+            </div>
+            <div>
+              <label class="birth__label" for="year">Năm</label>
+              <select id="year" name="year" autocomplete="bday-year" required><option value="">Chọn</option></select>
+            </div>
           </div>
           <p class="field__error" id="err-birth" role="alert"></p>
         </fieldset>
@@ -95,6 +102,7 @@
         </div>
 
         <button class="btn" type="submit">Xé lịch xem con số của tôi</button>
+        <p class="form__note">Xem miễn phí, không cần tạo tài khoản.</p>
         <noscript><p class="field__error">Trang này cần bật JavaScript để tính con số của bạn.</p></noscript>
       </form>
     </section>
@@ -106,6 +114,7 @@
           <h2 id="ket-qua-tieu-de" tabindex="-1" data-result-heading></h2>
           <p class="result__title" data-result-title></p>
           <p class="result__summary" data-result-summary></p>
+          <p class="result__calc"><span>Cách ra con số này:</span> <span data-result-calc></span></p>
         </div>
       </div>
 
@@ -129,6 +138,26 @@
         <div class="chart" role="img" data-result-chart></div>
       </div>
 
+      <div class="result__cols">
+        <div>
+          <h3>Mũi tên trống</h3>
+          <div class="arrows" data-result-empty-arrows></div>
+        </div>
+        <div>
+          <h3>Số còn thiếu trong biểu đồ</h3>
+          <ul class="plain" data-result-missing></ul>
+        </div>
+      </div>
+
+      <div class="year">
+        <p class="year__number" aria-hidden="true" data-year-number></p>
+        <div>
+          <h3 data-year-heading></h3>
+          <p class="year__title" data-year-title></p>
+          <p data-year-text></p>
+        </div>
+      </div>
+
       <div class="locked">
         <h3>Phần luận giải riêng cho bạn</h3>
         <ul class="locked__list" data-result-locked></ul>
@@ -138,6 +167,27 @@
           <button class="btn btn--ghost" type="button" data-retry hidden>Gửi lại thông tin</button>
           <button class="btn btn--ghost" type="button" data-reset>Xem cho ngày sinh khác</button>
         </div>
+      </div>
+    </section>
+
+    <section class="explain" aria-labelledby="doc-ngay-sinh">
+      <h2 id="doc-ngay-sinh">Một ngày sinh, ba lớp thông tin</h2>
+      <div class="explain__grid">
+        <article>
+          <p class="explain__figure" aria-hidden="true">1+5+8+1+9+9+0</p>
+          <h3>Con số chủ đạo</h3>
+          <p>Tổng mọi chữ số trong ngày sinh, rút gọn về một số từ 2 đến 11 hoặc 22. Nó nói về hướng đi và tính cách nổi bật nhất của bạn.</p>
+        </article>
+        <article>
+          <div class="explain__mini" aria-hidden="true"><i></i><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+          <h3>Biểu đồ ngày sinh</h3>
+          <p>Chín ô cho chín con số. Số nào có trong ngày sinh thì ô đó sáng. Ô sáng là thế mạnh sẵn có, ô trống là điều cần rèn thêm.</p>
+        </article>
+        <article>
+          <div class="explain__mini explain__mini--arrow" aria-hidden="true"><i></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i></div>
+          <h3>Mũi tên</h3>
+          <p>Ba ô thẳng hàng cùng sáng tạo thành mũi tên sức mạnh, như Quyết tâm hay Trí tuệ. Ba ô cùng trống tạo thành mũi tên trống.</p>
+        </article>
       </div>
     </section>
 
@@ -156,11 +206,36 @@
       </ol>
     </section>
 
+    <section class="reading" aria-labelledby="luan-giai-rieng">
+      <div class="reading__intro">
+        <h2 id="luan-giai-rieng">Bản luận giải riêng nói sâu hơn về bốn mặt</h2>
+        <p>Phần miễn phí cho bạn bức tranh chung. Bản luận giải riêng đi vào từng mặt của đời sống và trả lời đúng câu hỏi bạn đã gửi.</p>
+        <a class="btn" href="#form-tra-cuu">Nhập ngày sinh của tôi</a>
+      </div>
+      <ul class="reading__list" data-reading-parts></ul>
+    </section>
+
     <section class="faq" aria-labelledby="hoi-dap">
       <h2 id="hoi-dap">Hay được hỏi</h2>
       <details>
         <summary>Con số chủ đạo được tính thế nào?</summary>
         <p>Cộng tất cả chữ số trong ngày, tháng, năm sinh dương lịch rồi cộng tiếp các chữ số của tổng cho tới khi ra một số từ 2 đến 11. Riêng tổng 22 được giữ nguyên. Ví dụ 15/8/1990: 1+5+8+1+9+9+0 = 33, rồi 3+3 = 6.</p>
+      </details>
+      <details>
+        <summary>Vì sao không có con số chủ đạo 1?</summary>
+        <p>Theo trường phái Pythagoras, tổng các chữ số của một ngày sinh không bao giờ dừng ở 1. Tổng 10 được giữ nguyên thành con số 10, nên dải số chạy từ 2 đến 11, cộng thêm số đặc biệt 22.</p>
+      </details>
+      <details>
+        <summary>Năm cá nhân là gì?</summary>
+        <p>Là con số của riêng bạn trong một năm, tính bằng cách cộng ngày sinh, tháng sinh với năm đang xét rồi rút về một số từ 1 đến 9. Mỗi người đi qua một chu kỳ 9 năm, mỗi năm một chủ đề.</p>
+      </details>
+      <details>
+        <summary>Xem có mất phí không?</summary>
+        <p>Con số chủ đạo, biểu đồ ngày sinh, mũi tên và năm cá nhân đều xem miễn phí ngay trên trang. Bản luận giải riêng được trao đổi qua Zalo.</p>
+      </details>
+      <details>
+        <summary>Thần số học có chính xác không?</summary>
+        <p>Thần số học không phải khoa học đã được kiểm chứng. Hãy dùng nó như một gợi ý để nhìn lại bản thân, không phải lời tiên đoán chắc chắn.</p>
       </details>
       <details>
         <summary>Tôi chỉ nhớ ngày sinh âm lịch thì sao?</summary>

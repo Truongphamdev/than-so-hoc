@@ -1,7 +1,8 @@
 # Landing page Thần số học
 
 Trang nhận thông tin khách (họ tên, ngày sinh, câu hỏi, Zalo hoặc email), hiện ngay phần miễn phí
-(con số chủ đạo, biểu đồ ngày sinh, mũi tên, tóm tắt) và gửi thông tin về webhook để workflow
+(con số chủ đạo kèm cách tính, biểu đồ ngày sinh, mũi tên đủ số và mũi tên trống, số còn thiếu,
+năm cá nhân) và gửi thông tin về webhook để workflow
 lập bản luận giải riêng.
 
 HTML, CSS và JavaScript thuần, không cần build.
@@ -10,7 +11,7 @@ HTML, CSS và JavaScript thuần, không cần build.
 
 ```bash
 npm start          # mở http://localhost:4173
-npm test           # 28 test cho phần tính toán, kiểm tra dữ liệu và gửi webhook
+npm test           # 36 test cho phần tính toán, kiểm tra dữ liệu và gửi webhook
 ```
 
 Trang dùng ES module nên phải mở qua máy chủ, không mở thẳng file `index.html`.
@@ -20,6 +21,7 @@ Trang dùng ES module nên phải mở qua máy chủ, không mở thẳng file 
 | Khoá | Ý nghĩa |
 |---|---|
 | `BRAND_NAME` | Tên thương hiệu hiện ở đầu và cuối trang |
+| `ZALO_PHONE` | Số Zalo hiện ở đầu trang, phần kết quả, chân trang và nút nổi |
 | `WEBHOOK_URL` | Địa chỉ nhận dữ liệu. Để trống thì trang chạy thử và báo rõ là chưa gửi |
 | `OLDEST_BIRTH_YEAR` | Năm sinh xa nhất trong danh sách chọn |
 
@@ -52,7 +54,7 @@ Phía workflow nên tự kiểm tra lại dữ liệu và giới hạn tần su�
 ```
 index.html
 css/style.css
-js/numerology.js   con số chủ đạo, biểu đồ ngày sinh, mũi tên (hàm thuần)
+js/numerology.js   con số chủ đạo, biểu đồ ngày sinh, mũi tên, năm cá nhân (hàm thuần)
 js/validate.js     kiểm tra và làm sạch dữ liệu form (hàm thuần)
 js/submit.js       đóng gói và gửi webhook
 js/content.js      nội dung luận giải cho từng con số, sửa chữ ở đây
@@ -65,3 +67,4 @@ tests/
 
 Con số chủ đạo: cộng mọi chữ số của ngày sinh dương lịch, rút gọn tới khi ra số từ 2 đến 11,
 giữ nguyên tổng 22. Biểu đồ ngày sinh: hàng trên 3 6 9, hàng giữa 2 5 8, hàng dưới 1 4 7.
+Năm cá nhân: cộng chữ số của ngày sinh, tháng sinh và năm đang xét, rút về 1 đến 9.

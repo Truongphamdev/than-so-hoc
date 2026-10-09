@@ -20,15 +20,20 @@ export function buildPayload(lead, result, meta) {
 
 export async function sendLead(payload, { url, fetchImpl = globalThis.fetch }) {
   if (!url) return { status: "demo" };
+  // AbortController thay cho AbortSignal.timeout để chạy được trên trình duyệt trong app đời cũ.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
     const response = await fetchImpl(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      signal: controller.signal,
     });
     return response.ok ? { status: "sent" } : { status: "failed", reason: `HTTP ${response.status}` };
   } catch (error) {
     return { status: "failed", reason: error.message };
+  } finally {
+    clearTimeout(timer);
   }
 }

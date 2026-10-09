@@ -1,6 +1,8 @@
 import { CONFIG } from "./config.js";
-import { RULING_NUMBERS, LOCKED_TOPICS } from "./content.js";
-import { rulingNumber, birthChart, findArrows, weekdayName, CHART_LAYOUT } from "./numerology.js";
+import { RULING_NUMBERS, LOCKED_TOPICS, PERSONAL_YEARS, CHART_NUMBERS, READING_PARTS } from "./content.js";
+import {
+  rulingNumber, rulingSteps, birthChart, findArrows, findEmptyArrows, missingNumbers, personalYear, weekdayName, CHART_LAYOUT,
+} from "./numerology.js";
 import { isRealDate, validateLead } from "./validate.js";
 import { buildPayload, sendLead } from "./submit.js";
 
@@ -41,7 +43,7 @@ function range(from, to) {
 function setUpSelects() {
   const thisYear = new Date().getFullYear();
   addOptions(form.day, range(1, 31), (day) => String(day));
-  addOptions(form.month, range(1, 12), (month) => `Tháng ${month}`);
+  addOptions(form.month, range(1, 12), (month) => String(month));
   addOptions(form.year, range(thisYear, CONFIG.OLDEST_BIRTH_YEAR), (year) => String(year));
 }
 
@@ -113,18 +115,17 @@ function renderChart(chart) {
   container.replaceChildren(...cells);
 }
 
-function renderArrows(arrows) {
-  const container = $("[data-result-arrows]");
+function renderArrows(container, arrows, emptyNote) {
   if (arrows.length === 0) {
     const note = document.createElement("p");
-    note.textContent = "Biểu đồ của bạn chưa có đường nào đủ ba số. Điều này rất thường gặp và không phải điểm yếu.";
+    note.textContent = emptyNote;
     container.replaceChildren(note);
     return;
   }
   container.replaceChildren(...arrows.map((arrow) => {
     const line = document.createElement("p");
     const name = document.createElement("strong");
-    name.textContent = `Mũi tên ${arrow.name} (${arrow.id}). `;
+    name.textContent = `${arrow.name} (${arrow.id}). `;
     line.append(name, arrow.meaning);
     return line;
   }));
@@ -162,7 +163,43 @@ function setUpZaloLinks() {
 }
 
 function givenName(fullName) {
-  return fullName.split(" ").at(-1);
+  const words = fullName.split(" ");
+  return words[words.length - 1];
+}
+
+// "1 + 5 + 8 + 1 + 9 + 9 + 0 = 33, rồi 3 + 3 = 6"
+function describeSteps(steps) {
+  return steps.map((step) => `${step.parts.join(" + ")} = ${step.total}`).join(", rồi ");
+}
+
+function renderMissing(numbers) {
+  const items = numbers.length === 0
+    ? ["Biểu đồ của bạn có đủ cả chín số. Rất hiếm gặp."]
+    : numbers.map((digit) => `Số ${digit}: cần rèn thêm ${CHART_NUMBERS[digit]}.`);
+  fillList($("[data-result-missing]"), items);
+}
+
+function renderPersonalYear(birth) {
+  const year = new Date().getFullYear();
+  const number = personalYear(birth, year);
+  const reading = PERSONAL_YEARS[number];
+  $("[data-year-number]").textContent = String(number);
+  $("[data-year-heading]").textContent = `Năm ${year} là năm cá nhân số ${number} của bạn`;
+  $("[data-year-title]").textContent = reading.title;
+  $("[data-year-text]").textContent = reading.text;
+}
+
+function renderReadingParts() {
+  const items = READING_PARTS.map((part) => {
+    const item = document.createElement("li");
+    const title = document.createElement("h3");
+    title.textContent = part.title;
+    const text = document.createElement("p");
+    text.textContent = part.text;
+    item.append(title, text);
+    return item;
+  });
+  $("[data-reading-parts]").replaceChildren(...items);
 }
 
 function renderResult(lead, number) {
@@ -174,8 +211,20 @@ function renderResult(lead, number) {
   $("[data-result-summary]").textContent = reading.summary;
   fillList($("[data-result-strengths]"), reading.strengths);
   fillList($("[data-result-watch]"), reading.watch);
+  $("[data-result-calc]").textContent = describeSteps(rulingSteps(lead.birth));
   renderChart(chart);
-  renderArrows(findArrows(chart));
+  renderArrows(
+    $("[data-result-arrows]"),
+    findArrows(chart).map((arrow) => ({ ...arrow, name: `Mũi tên ${arrow.name}` })),
+    "Biểu đồ của bạn chưa có đường nào đủ ba số. Điều này rất thường gặp và không phải điểm yếu.",
+  );
+  renderArrows(
+    $("[data-result-empty-arrows]"),
+    findEmptyArrows(chart).map((arrow) => ({ ...arrow, name: `Mũi tên trống ${arrow.name}` })),
+    "Bạn không có mũi tên trống nào. Không đường nào trong biểu đồ bị bỏ trống hoàn toàn.",
+  );
+  renderMissing(missingNumbers(chart));
+  renderPersonalYear(lead.birth);
   const topics = lead.question ? [...LOCKED_TOPICS, `Câu hỏi của bạn: “${lead.question}”`] : LOCKED_TOPICS;
   fillList($("[data-result-locked]"), topics);
   $("[data-cal-number]").textContent = String(number);
@@ -238,10 +287,13 @@ function init() {
   setUpSelects();
   setUpZaloLinks();
   renderNumberGrid();
+  renderReadingParts();
   updateCalendar();
   clearErrorsWhenEdited();
   for (const select of [form.day, form.month, form.year]) select.addEventListener("change", updateCalendar);
   form.addEventListener("submit", onSubmit);
+  form.addEventListener("focusin", () => document.body.classList.add("is-typing"));
+  form.addEventListener("focusout", () => document.body.classList.remove("is-typing"));
   retryButton.addEventListener("click", deliver);
   $("[data-reset]").addEventListener("click", onReset);
 }

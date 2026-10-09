@@ -73,3 +73,35 @@ export const LOCKED_TOPICS = Object.freeze([
   "Tài chính và cách giữ tiền",
   "Vận trình từng năm sắp tới",
 ]);
+
+export const PERSONAL_YEARS = Object.freeze({
+  1: { title: "Năm khởi đầu", text: "Mở đầu một chu kỳ 9 năm mới. Hợp để bắt đầu việc mới, tự quyết và đặt mục tiêu dài hạn." },
+  2: { title: "Năm vun đắp", text: "Nhịp chậm lại. Hợp để xây quan hệ, hợp tác và kiên nhẫn với những gì đã gieo." },
+  3: { title: "Năm thể hiện", text: "Đầu óc linh hoạt, thích giao tiếp. Hợp để học thêm, sáng tạo và mở rộng bạn bè." },
+  4: { title: "Năm xây nền", text: "Nhiều việc cần làm tới nơi tới chốn. Hợp để củng cố nền tảng, sức khoẻ và kỷ luật." },
+  5: { title: "Năm thay đổi", text: "Có nhiều biến động và cơ hội mới. Hợp để thử cái khác, đi nhiều và nới bớt gò bó." },
+  6: { title: "Năm gia đình", text: "Trách nhiệm với người thân tăng lên. Hợp để chăm sóc tổ ấm và các mối quan hệ gần." },
+  7: { title: "Năm chiêm nghiệm", text: "Thiên về nhìn lại và học từ trải nghiệm. Hợp để học sâu, nghỉ ngơi và sống chậm." },
+  8: { title: "Năm gặt hái", text: "Công sức các năm trước bắt đầu cho kết quả. Hợp để tập trung vào sự nghiệp và tài chính." },
+  9: { title: "Năm khép lại", text: "Kết thúc một chu kỳ. Hợp để hoàn tất việc dang dở, buông điều cũ và chuẩn bị cho vòng mới." },
+});
+
+// Phẩm chất gắn với từng ô trong biểu đồ ngày sinh.
+export const CHART_NUMBERS = Object.freeze({
+  1: "cách thể hiện cái tôi và nói ra suy nghĩ",
+  2: "trực giác và sự nhạy cảm với người khác",
+  3: "trí óc, trí nhớ và óc tưởng tượng",
+  4: "tính ngăn nắp, kiên nhẫn và thực tế",
+  5: "sự tự do và cân bằng cảm xúc",
+  6: "óc sáng tạo và trách nhiệm với gia đình",
+  7: "bài học rút ra từ trải nghiệm",
+  8: "sự độc lập và khả năng tổ chức",
+  9: "hoài bão và lý tưởng sống",
+});
+
+export const READING_PARTS = Object.freeze([
+  { title: "Sự nghiệp", text: "Kiểu công việc và môi trường hợp với con số của bạn, điểm mạnh nên dùng và điều dễ làm bạn chùn bước." },
+  { title: "Tình duyên", text: "Cách bạn yêu và cần được yêu, con số nào hợp tính, điều gì hay gây xa cách." },
+  { title: "Tài chính", text: "Thói quen kiếm và giữ tiền theo con số chủ đạo, giai đoạn nên tích luỹ hay mạnh dạn hơn." },
+  { title: "Vận trình từng năm", text: "Năm cá nhân của bạn trong các năm tới, năm nào nên bắt đầu, năm nào nên chậm lại." },
+]);
