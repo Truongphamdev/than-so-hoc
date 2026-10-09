@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luận Số: xem con số chủ đạo theo ngày sinh</title>
+  <meta name="description" content="Nhập họ tên và ngày sinh để xem miễn phí con số chủ đạo, biểu đồ ngày sinh và gửi câu hỏi để nhận bản luận giải riêng.">
+  <meta property="og:title" content="Ngày bạn sinh ra mang con số nào?">
+  <meta property="og:description" content="Xem miễn phí con số chủ đạo và biểu đồ ngày sinh trong chưa đến một phút.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#14213D">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23fff'/%3E%3Crect width='32' height='9' rx='4' fill='%23c8102e'/%3E%3Ctext x='16' y='27' text-anchor='middle' font-family='Arial' font-weight='900' font-size='19' fill='%23c8102e'%3E9%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Big+Shoulders+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#form-tra-cuu">Tới phần nhập thông tin</a>
+
+  <header class="top">
+    <p class="brand" data-brand>Luận Số</p>
+    <p class="top__note">Thần số học theo ngày sinh</p>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="tieu-de">
+      <div class="hero__text">
+        <h1 id="tieu-de">Ngày bạn sinh ra mang con số nào?</h1>
+        <p class="lede">Chọn ngày sinh, tờ lịch sẽ lật về đúng ngày bạn chào đời. Xé tờ lịch để xem con số chủ đạo và biểu đồ ngày sinh của bạn. Miễn phí, chưa đến một phút.</p>
+      </div>
+
+      <div class="lich" aria-hidden="true">
+        <div class="lich__gay"></div>
+        <div class="lich__chong">
+          <div class="lich__to lich__to--so">
+            <p class="lich__dau">Con số chủ đạo</p>
+            <p class="lich__ngay" data-cal-number>?</p>
+            <p class="lich__thu" data-cal-title></p>
+          </div>
+          <div class="lich__to lich__to--ngay" data-cal-page>
+            <p class="lich__dau" data-cal-month></p>
+            <p class="lich__ngay" data-cal-day></p>
+            <p class="lich__thu" data-cal-weekday></p>
+            <p class="lich__chu" data-cal-caption></p>
+          </div>
+        </div>
+      </div>
+
+      <form class="form" id="form-tra-cuu" novalidate>
+        <div class="field" data-field="fullName">
+          <label for="fullName">Họ và tên</label>
+          <input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="80" placeholder="Nguyễn Thị Mai" required>
+          <p class="field__error" id="err-fullName" role="alert"></p>
+        </div>
+
+        <fieldset class="field" data-field="birth">
+          <legend>Ngày sinh dương lịch</legend>
+          <div class="birth">
+            <label class="visually-hidden" for="day">Ngày</label>
+            <select id="day" name="day" autocomplete="bday-day" required><option value="">Ngày</option></select>
+            <label class="visually-hidden" for="month">Tháng</label>
+            <select id="month" name="month" autocomplete="bday-month" required><option value="">Tháng</option></select>
+            <label class="visually-hidden" for="year">Năm</label>
+            <select id="year" name="year" autocomplete="bday-year" required><option value="">Năm</option></select>
+          </div>
+          <p class="field__error" id="err-birth" role="alert"></p>
+        </fieldset>
+
+        <div class="field" data-field="question">
+          <label for="question">Điều bạn muốn hỏi <span class="optional">(không bắt buộc)</span></label>
+          <textarea id="question" name="question" rows="3" maxlength="600" placeholder="Ví dụ: Năm nay mình có nên đổi việc không?"></textarea>
+          <p class="field__error" id="err-question" role="alert"></p>
+        </div>
+
+        <div class="field" data-field="contact">
+          <label for="contact">Số Zalo hoặc email</label>
+          <input id="contact" name="contact" type="text" inputmode="email" autocomplete="tel" placeholder="0912 345 678" required>
+          <p class="field__hint">Bản luận giải riêng sẽ được gửi về đây.</p>
+          <p class="field__error" id="err-contact" role="alert"></p>
+        </div>
+
+        <div class="trap" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="field field--check" data-field="consent">
+          <label class="check">
+            <input id="consent" name="consent" type="checkbox" required>
+            <span>Tôi đồng ý cho dùng họ tên, ngày sinh và liên hệ ở trên để lập và gửi bản luận giải cho tôi.</span>
+          </label>
+          <p class="field__error" id="err-consent" role="alert"></p>
+        </div>
+
+        <button class="btn" type="submit">Xé lịch xem con số của tôi</button>
+        <noscript><p class="field__error">Trang này cần bật JavaScript để tính con số của bạn.</p></noscript>
+      </form>
+    </section>
+
+    <section class="result" id="ket-qua" hidden aria-labelledby="ket-qua-tieu-de">
+      <div class="result__head">
+        <h2 id="ket-qua-tieu-de" tabindex="-1" data-result-heading></h2>
+        <p class="result__title" data-result-title></p>
+        <p class="result__summary" data-result-summary></p>
+      </div>
+
+      <div class="result__cols">
+        <div>
+          <h3>Điểm mạnh</h3>
+          <ul class="plain" data-result-strengths></ul>
+        </div>
+        <div>
+          <h3>Điều nên để ý</h3>
+          <ul class="plain" data-result-watch></ul>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <div>
+          <h3>Biểu đồ ngày sinh</h3>
+          <p class="chart-block__note">Mỗi chữ số trong ngày sinh nằm vào một ô cố định. Ô trống là phẩm chất bạn cần tự rèn thêm.</p>
+          <div class="arrows" data-result-arrows></div>
+        </div>
+        <div class="chart" role="img" data-result-chart></div>
+      </div>
+
+      <div class="locked">
+        <h3>Phần luận giải riêng cho bạn</h3>
+        <ul class="locked__list" data-result-locked></ul>
+        <p class="status" role="status" data-result-status></p>
+        <div class="locked__actions">
+          <button class="btn btn--ghost" type="button" data-retry hidden>Gửi lại thông tin</button>
+          <button class="btn btn--ghost" type="button" data-reset>Xem cho ngày sinh khác</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps" aria-labelledby="cach-lam">
+      <h2 id="cach-lam">Từ ngày sinh tới bản luận giải</h2>
+      <ol class="steps__list">
+        <li><strong>Nhập họ tên và ngày sinh.</strong> Nếu đang có điều băn khoăn, viết thêm câu hỏi của bạn.</li>
+        <li><strong>Xem ngay phần miễn phí.</strong> Con số chủ đạo, biểu đồ ngày sinh và phần tóm tắt hiện ngay trên trang.</li>
+        <li><strong>Nhận bản luận giải riêng.</strong> Phần chuyên sâu và câu trả lời cho câu hỏi của bạn được gửi qua Zalo hoặc email.</li>
+      </ol>
+    </section>
+
+    <section class="faq" aria-labelledby="hoi-dap">
+      <h2 id="hoi-dap">Hay được hỏi</h2>
+      <details>
+        <summary>Con số chủ đạo được tính thế nào?</summary>
+        <p>Cộng tất cả chữ số trong ngày, tháng, năm sinh dương lịch rồi cộng tiếp các chữ số của tổng cho tới khi ra một số từ 2 đến 11. Riêng tổng 22 được giữ nguyên. Ví dụ 15/8/1990: 1+5+8+1+9+9+0 = 33, rồi 3+3 = 6.</p>
+      </details>
+      <details>
+        <summary>Tôi chỉ nhớ ngày sinh âm lịch thì sao?</summary>
+        <p>Thần số học dùng ngày dương lịch. Bạn đổi ngày âm sang dương trước, hoặc xem ngày ghi trên giấy khai sinh.</p>
+      </details>
+      <details>
+        <summary>Thông tin của tôi được dùng vào việc gì?</summary>
+        <p>Chỉ để lập bản luận giải và gửi cho bạn qua kênh bạn đã nhập. Bạn có thể nhắn yêu cầu xoá thông tin bất cứ lúc nào.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Thần số học là công cụ tham khảo để hiểu mình hơn, không thay cho lời khuyên về y tế, pháp lý hay tài chính.</p>
+    <p>© <span data-year></span> <span data-brand>Luận Số</span></p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

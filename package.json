@@ -1,0 +1,12 @@
+{
+  "name": "than-so-hoc-landing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Landing page nhận thông tin và tra cứu thần số học miễn phí",
+  "scripts": {
+    "test": "node --test tests/",
+    "coverage": "node --test --experimental-test-coverage tests/",
+    "start": "python3 -m http.server 4173"
+  }
+}
