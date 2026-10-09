@@ -9,6 +9,8 @@
   --red-dark: #9f0c24;
   --jade: #0b6e4f;
   --sun: #ffc83d;
+  --red-deep: #a50c25;
+  --zalo: #0068ff;
   --line: #c3cfc6;
 
   --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
@@ -17,6 +19,8 @@
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --measure: 34rem;
   --page: 64rem;
+  /* Lề hai bên: nền tràn hết màn hình, nội dung vẫn gói trong --page */
+  --bleed: max(var(--gutter), calc((100vw - var(--page)) / 2));
   --radius: 4px;
 }
 
@@ -62,22 +66,34 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 
 /* Đầu trang */
 .top {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
-  padding: 1.1rem var(--gutter);
+  position: absolute; left: 0; right: 0; z-index: 2;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 1rem var(--bleed);
 }
-.brand { font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; line-height: 1; color: var(--red); }
-.top__note { font-size: 0.9rem; color: var(--ink-soft); }
+.brand { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; line-height: 1; color: var(--sun); }
+.top__zalo {
+  font-size: 0.95rem; font-weight: 600; color: var(--sheet); text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.6); border-radius: 999px; padding: 0.4rem 0.9rem;
+}
+.top__zalo:hover { background: var(--sheet); color: var(--red-deep); }
 
 /* Hero */
 .hero {
+  --sun-x: 50%;
+  --sun-y: 25rem;
   display: grid;
   gap: 2rem;
-  padding: clamp(1rem, 3vw, 2.5rem) var(--gutter) clamp(3rem, 7vw, 5.5rem);
-  max-width: calc(var(--page) + 2 * var(--gutter));
-  margin-inline: auto;
+  padding: 5.5rem var(--bleed) clamp(3rem, 7vw, 5.5rem);
+  color: var(--sheet);
+  /* Tia nắng toả ra từ sau tờ lịch */
+  background:
+    repeating-conic-gradient(from 0deg at var(--sun-x) var(--sun-y), rgba(255, 200, 61, 0.13) 0 5deg, transparent 5deg 15deg),
+    radial-gradient(circle at var(--sun-x) var(--sun-y), #e8263f 0, var(--red) 32%, var(--red-deep) 100%);
+  overflow: hidden;
 }
 .hero__text { max-width: var(--measure); }
-.lede { margin-top: 1.1rem; font-size: 1.125rem; max-width: 30rem; }
+.hero h1 { text-shadow: 0 3px 0 var(--red-deep); }
+.lede { margin-top: 1.1rem; font-size: 1.125rem; max-width: 30rem; color: #ffeef0; }
 
 @media (min-width: 56rem) {
   .hero {
@@ -85,6 +101,8 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
     grid-template-areas: "text lich" "form lich";
     column-gap: clamp(2rem, 6vw, 5rem);
     align-items: start;
+    --sun-x: calc(100% - var(--bleed) - 11.5rem);
+    --sun-y: 21rem;
   }
   .hero__text { grid-area: text; }
   .hero .form { grid-area: form; }
@@ -93,21 +111,32 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 
 /* Tờ lịch */
 .lich {
+  position: relative;
   width: min(100%, 15rem);
   margin-inline: auto;
-  filter: drop-shadow(0 18px 22px rgba(20, 33, 61, 0.22));
+  rotate: 2.5deg;
+  filter: drop-shadow(0 22px 26px rgba(70, 0, 14, 0.5));
+}
+.lich__nhan {
+  position: absolute; z-index: 3; top: -1.4rem; right: -1.6rem;
+  display: grid; place-items: center;
+  width: 5.4rem; height: 5.4rem; border-radius: 50%;
+  background: var(--sun); color: var(--ink);
+  font-family: var(--font-display); font-weight: 900; font-size: 1.15rem; line-height: 1.05; text-align: center;
+  rotate: 12deg;
+  box-shadow: 0 0 0 3px var(--sheet), 0 6px 14px rgba(70, 0, 14, 0.4);
 }
 @media (min-width: 56rem) { .lich { width: 100%; } }
 
 .lich__gay {
   position: relative;
   height: 2.4rem;
-  background: var(--red);
+  background: var(--ink);
   border-radius: 6px 6px 0 0;
 }
 .lich__gay::before, .lich__gay::after {
   content: ""; position: absolute; top: 50%; width: 0.7rem; height: 0.7rem;
-  border-radius: 50%; background: var(--wall); transform: translateY(-50%);
+  border-radius: 50%; background: var(--sun); transform: translateY(-50%);
   box-shadow: inset 0 1px 2px rgba(20, 33, 61, 0.45);
 }
 .lich__gay::before { left: 22%; }
@@ -125,6 +154,7 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 6cqw 5cqw;
   background: var(--sheet);
+  color: var(--ink);
   border-top: 2px dashed var(--line);
   text-align: center;
 }
@@ -150,7 +180,13 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 }
 
 /* Form */
-.form { display: grid; gap: 1.15rem; max-width: 30rem; }
+.form {
+  display: grid; gap: 1.15rem; max-width: 31rem;
+  background: var(--sheet); color: var(--ink);
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 var(--red-deep), 0 24px 40px rgba(70, 0, 14, 0.35);
+}
 .field label, .field legend { display: block; font-weight: 600; margin-bottom: 0.35rem; }
 .optional { font-weight: 400; color: var(--ink-soft); }
 
@@ -166,7 +202,8 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 .form ::placeholder { color: #8a93a6; }
 .form select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 1.05rem) 55%, calc(100% - 0.7rem) 55%; background-size: 0.35rem 0.35rem; background-repeat: no-repeat; padding-right: 1.9rem; }
 
-.birth { display: grid; grid-template-columns: 1fr 1.25fr 1.25fr; gap: 0.6rem; }
+.birth { display: grid; grid-template-columns: 1fr 1.5fr 1.2fr; gap: 0.5rem; }
+.birth select { padding-left: 0.7rem; padding-right: 1.6rem; }
 
 .field__hint { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.3rem; }
 .field__error { font-size: 0.92rem; color: var(--red-dark); font-weight: 500; margin-top: 0.3rem; }
@@ -187,14 +224,23 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 }
 .btn:hover { background: var(--red-dark); border-color: var(--red-dark); }
 .btn:disabled { opacity: 0.6; cursor: progress; }
+.btn--zalo { display: inline-block; text-decoration: none; background: var(--zalo); border-color: var(--zalo); padding: 0.7rem 1.1rem; font-size: 1rem; }
+.btn--zalo:hover { background: #0052cc; border-color: #0052cc; }
 .btn--ghost { color: var(--ink); background: transparent; border-color: var(--ink); padding: 0.7rem 1.1rem; font-size: 1rem; }
 .btn--ghost:hover { color: var(--sheet); background: var(--ink); border-color: var(--ink); }
 
 /* Kết quả */
-.result { background: var(--paper); padding: clamp(2.5rem, 7vw, 5rem) var(--gutter); }
-.result > * { max-width: var(--page); margin-inline: auto; }
+.result { background: var(--paper); padding: clamp(2.5rem, 7vw, 5rem) var(--bleed); }
 .result > * + * { margin-top: clamp(2rem, 5vw, 3.25rem); }
 
+.result__head { display: grid; gap: 1rem 2rem; align-items: center; }
+@media (min-width: 40rem) { .result__head { grid-template-columns: auto 1fr; } }
+.result__number {
+  font-family: var(--font-display); font-weight: 900; line-height: 0.85;
+  font-size: clamp(7rem, 22vw, 12rem);
+  color: var(--red);
+  text-shadow: 0.06em 0.06em 0 var(--sun);
+}
 .result__head h2:focus { outline: none; }
 .result__title { font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; color: var(--jade); margin-top: 0.4rem; }
 .result__summary { margin-top: 0.8rem; font-size: 1.125rem; max-width: var(--measure); }
@@ -241,9 +287,24 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 .status[data-state="failed"] { color: var(--red-dark); }
 .locked__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
 
+/* Mười một con số */
+.numbers { background: var(--ink); color: var(--sheet); padding: clamp(2.5rem, 7vw, 4.5rem) var(--bleed); }
+.numbers__note { margin-top: 0.6rem; color: #c9d2e3; }
+.numbers__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.75rem, 1fr)); gap: 0.75rem; margin-top: 1.75rem; }
+.numbers__tile {
+  display: grid; gap: 0.2rem; padding: 0.9rem 1rem 1rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.22); border-radius: 10px;
+  font-weight: 500; font-size: 0.98rem;
+}
+.numbers__numeral { font-family: var(--font-display); font-weight: 900; font-size: 3.4rem; line-height: 1; color: var(--sun); }
+.numbers__tile:nth-child(3n + 2) .numbers__numeral { color: #ff7d92; }
+.numbers__tile:nth-child(3n) .numbers__numeral { color: #7fe3bb; }
+.numbers__tile.is-mine { background: var(--sun); border-color: var(--sun); color: var(--ink); }
+.numbers__tile.is-mine .numbers__numeral { color: var(--red); }
+.numbers__tile.is-mine::after { content: "Con số của bạn"; font-size: 0.82rem; font-weight: 600; }
+
 /* Các bước */
-.steps, .faq { padding: clamp(2.5rem, 7vw, 4.5rem) var(--gutter); }
-.steps > *, .faq > * { max-width: var(--page); margin-inline: auto; }
+.steps, .faq { padding: clamp(2.5rem, 7vw, 4.5rem) var(--bleed); }
 .steps__list { counter-reset: buoc; display: grid; gap: 1.5rem; margin-top: 1.75rem; }
 @media (min-width: 48rem) { .steps__list { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; } }
 .steps__list li { counter-increment: buoc; border-top: 2px solid var(--ink); padding-top: 0.6rem; }
@@ -263,10 +324,28 @@ h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
 .faq details p { padding-bottom: 1.1rem; max-width: var(--measure); }
 
 .foot {
-  padding: 2rem var(--gutter) 2.5rem; background: var(--ink); color: #dfe5ee;
+  padding: 2rem var(--bleed) 5.5rem; background: #0d1730; color: #dfe5ee;
   font-size: 0.92rem; display: grid; gap: 0.5rem;
 }
-.foot p { max-width: var(--page); margin-inline: auto; width: 100%; }
+.foot a { color: var(--sun); font-weight: 600; }
+
+/* Nút Zalo nổi */
+.zalo-fab {
+  position: fixed; z-index: 10; right: 1rem; bottom: 1rem;
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem; border-radius: 999px;
+  background: var(--zalo); color: var(--sheet); text-decoration: none; font-weight: 600;
+  box-shadow: 0 0 0 3px var(--sheet), 0 10px 24px rgba(0, 60, 150, 0.4);
+}
+.zalo-fab:hover { background: #0052cc; }
+@media (max-width: 30rem) {
+  .zalo-fab { padding: 0.4rem; }
+  .zalo-fab__text { display: none; }
+}
+.zalo-fab__logo {
+  display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  background: var(--sheet); color: var(--zalo); font-size: 0.78rem; font-weight: 600; letter-spacing: -0.02em;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

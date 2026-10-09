@@ -130,6 +130,37 @@ function renderArrows(arrows) {
   }));
 }
 
+function renderNumberGrid() {
+  const tiles = Object.entries(RULING_NUMBERS).map(([number, reading]) => {
+    const tile = document.createElement("li");
+    tile.className = "numbers__tile";
+    tile.dataset.number = number;
+    const numeral = document.createElement("span");
+    numeral.className = "numbers__numeral";
+    numeral.textContent = number;
+    const title = document.createElement("span");
+    title.textContent = reading.title;
+    tile.append(numeral, title);
+    return tile;
+  });
+  $("[data-number-grid]").replaceChildren(...tiles);
+}
+
+function markOwnNumber(number) {
+  document.querySelectorAll(".numbers__tile").forEach((tile) => {
+    tile.classList.toggle("is-mine", number !== null && tile.dataset.number === String(number));
+  });
+}
+
+function formatPhone(phone) {
+  return phone.replace(/^(\d{4})(\d{3})(\d{3})$/, "$1 $2 $3");
+}
+
+function setUpZaloLinks() {
+  document.querySelectorAll("[data-zalo-link]").forEach((link) => { link.href = `https://zalo.me/${CONFIG.ZALO_PHONE}`; });
+  document.querySelectorAll("[data-zalo-number]").forEach((node) => { node.textContent = formatPhone(CONFIG.ZALO_PHONE); });
+}
+
 function givenName(fullName) {
   return fullName.split(" ").at(-1);
 }
@@ -138,6 +169,7 @@ function renderResult(lead, number) {
   const reading = RULING_NUMBERS[number];
   const chart = birthChart(lead.birth);
   $("[data-result-heading]").textContent = `${givenName(lead.fullName)}, con số chủ đạo của bạn là ${number}`;
+  $("[data-result-number]").textContent = String(number);
   $("[data-result-title]").textContent = reading.title;
   $("[data-result-summary]").textContent = reading.summary;
   fillList($("[data-result-strengths]"), reading.strengths);
@@ -148,6 +180,7 @@ function renderResult(lead, number) {
   fillList($("[data-result-locked]"), topics);
   $("[data-cal-number]").textContent = String(number);
   $("[data-cal-title]").textContent = reading.title;
+  markOwnNumber(number);
 }
 
 function setStatus(state, contact = "") {
@@ -194,6 +227,7 @@ function onSubmit(event) {
 function onReset() {
   resultSection.hidden = true;
   calendarPage.classList.remove("is-torn");
+  markOwnNumber(null);
   form.scrollIntoView({ block: "start" });
   form.day.focus({ preventScroll: true });
 }
@@ -202,6 +236,8 @@ function init() {
   document.querySelectorAll("[data-brand]").forEach((node) => { node.textContent = CONFIG.BRAND_NAME; });
   $("[data-year]").textContent = String(new Date().getFullYear());
   setUpSelects();
+  setUpZaloLinks();
+  renderNumberGrid();
   updateCalendar();
   clearErrorsWhenEdited();
   for (const select of [form.day, form.month, form.year]) select.addEventListener("change", updateCalendar);

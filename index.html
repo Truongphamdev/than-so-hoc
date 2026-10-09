@@ -8,7 +8,7 @@
   <meta property="og:title" content="Ngày bạn sinh ra mang con số nào?">
   <meta property="og:description" content="Xem miễn phí con số chủ đạo và biểu đồ ngày sinh trong chưa đến một phút.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#14213D">
+  <meta name="theme-color" content="#c8102e">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23fff'/%3E%3Crect width='32' height='9' rx='4' fill='%23c8102e'/%3E%3Ctext x='16' y='27' text-anchor='middle' font-family='Arial' font-weight='900' font-size='19' fill='%23c8102e'%3E9%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
 
   <header class="top">
     <p class="brand" data-brand>Luận Số</p>
-    <p class="top__note">Thần số học theo ngày sinh</p>
+    <a class="top__zalo" data-zalo-link href="https://zalo.me/0365908714" target="_blank" rel="noopener">Zalo <span data-zalo-number>0365 908 714</span></a>
   </header>
 
   <main>
@@ -31,6 +31,7 @@
       </div>
 
       <div class="lich" aria-hidden="true">
+        <p class="lich__nhan">Miễn phí<br>1 phút</p>
         <div class="lich__gay"></div>
         <div class="lich__chong">
           <div class="lich__to lich__to--so">
@@ -100,9 +101,12 @@
 
     <section class="result" id="ket-qua" hidden aria-labelledby="ket-qua-tieu-de">
       <div class="result__head">
-        <h2 id="ket-qua-tieu-de" tabindex="-1" data-result-heading></h2>
-        <p class="result__title" data-result-title></p>
-        <p class="result__summary" data-result-summary></p>
+        <p class="result__number" aria-hidden="true" data-result-number></p>
+        <div>
+          <h2 id="ket-qua-tieu-de" tabindex="-1" data-result-heading></h2>
+          <p class="result__title" data-result-title></p>
+          <p class="result__summary" data-result-summary></p>
+        </div>
       </div>
 
       <div class="result__cols">
@@ -130,10 +134,17 @@
         <ul class="locked__list" data-result-locked></ul>
         <p class="status" role="status" data-result-status></p>
         <div class="locked__actions">
+          <a class="btn btn--zalo" data-zalo-link href="https://zalo.me/0365908714" target="_blank" rel="noopener">Nhắn Zalo để nhận luận giải</a>
           <button class="btn btn--ghost" type="button" data-retry hidden>Gửi lại thông tin</button>
           <button class="btn btn--ghost" type="button" data-reset>Xem cho ngày sinh khác</button>
         </div>
       </div>
+    </section>
+
+    <section class="numbers" aria-labelledby="cac-con-so">
+      <h2 id="cac-con-so">Mười một con số chủ đạo, bạn là số nào?</h2>
+      <p class="numbers__note">Mỗi ngày sinh rơi vào đúng một trong các con số dưới đây.</p>
+      <ul class="numbers__grid" data-number-grid></ul>
     </section>
 
     <section class="steps" aria-labelledby="cach-lam">
@@ -157,15 +168,21 @@
       </details>
       <details>
         <summary>Thông tin của tôi được dùng vào việc gì?</summary>
-        <p>Chỉ để lập bản luận giải và gửi cho bạn qua kênh bạn đã nhập. Bạn có thể nhắn yêu cầu xoá thông tin bất cứ lúc nào.</p>
+        <p>Chỉ để lập bản luận giải và gửi cho bạn qua kênh bạn đã nhập. Bạn có thể nhắn Zalo 0365 908 714 để yêu cầu xoá thông tin bất cứ lúc nào.</p>
       </details>
     </section>
   </main>
 
   <footer class="foot">
     <p>Thần số học là công cụ tham khảo để hiểu mình hơn, không thay cho lời khuyên về y tế, pháp lý hay tài chính.</p>
+    <p>Cần hỏi thêm? Nhắn Zalo <a data-zalo-link href="https://zalo.me/0365908714" target="_blank" rel="noopener"><span data-zalo-number>0365 908 714</span></a>.</p>
     <p>© <span data-year></span> <span data-brand>Luận Số</span></p>
   </footer>
+
+  <a class="zalo-fab" data-zalo-link href="https://zalo.me/0365908714" target="_blank" rel="noopener" aria-label="Nhắn Zalo 0365 908 714">
+    <span class="zalo-fab__logo" aria-hidden="true">Zalo</span>
+    <span class="zalo-fab__text">Nhắn Zalo</span>
+  </a>
 
   <script type="module" src="js/app.js"></script>
 </body>
